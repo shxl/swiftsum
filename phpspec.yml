@@ -1,5 +1,5 @@
 suites:
     main:
-        namespace: App
-        psr4_prefix: App
+        namespace: SwiftSum
+        psr4_prefix: SwiftSum
         src_path: app

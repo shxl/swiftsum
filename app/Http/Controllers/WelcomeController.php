@@ -1,4 +1,6 @@
-<?php namespace App\Http\Controllers;
+<?php namespace SwiftSum\Http\Controllers;
+
+use SwiftSum\Services\BaelorAPI;
 
 class WelcomeController extends Controller {
 
@@ -13,15 +15,6 @@ class WelcomeController extends Controller {
 	|
 	*/
 
-	/**
-	 * Create a new controller instance.
-	 *
-	 * @return void
-	 */
-	public function __construct()
-	{
-		$this->middleware('guest');
-	}
 
 	/**
 	 * Show the application welcome screen to the user.
@@ -32,5 +25,4 @@ class WelcomeController extends Controller {
 	{
 		return view('welcome');
 	}
-
 }

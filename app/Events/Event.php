@@ -1,4 +1,4 @@
-<?php namespace App\Events;
+<?php namespace SwiftSum\Events;
 
 abstract class Event {
 

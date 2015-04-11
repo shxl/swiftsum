@@ -1,4 +1,4 @@
-<?php namespace App\Commands;
+<?php namespace SwiftSum\Commands;
 
 abstract class Command {
 

@@ -1,48 +1,39 @@
-<html>
-	<head>
-		<title>Laravel</title>
-		
-		<link href='//fonts.googleapis.com/css?family=Lato:100' rel='stylesheet' type='text/css'>
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Code</title>
 
-		<style>
-			body {
-				margin: 0;
-				padding: 0;
-				width: 100%;
-				height: 100%;
-				color: #B0BEC5;
-				display: table;
-				font-weight: 100;
-				font-family: 'Lato';
-			}
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+      <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+  </head>
+  <body>
 
-			.container {
-				text-align: center;
-				display: table-cell;
-				vertical-align: middle;
-			}
+	@include('vendor.flash.message')
 
-			.content {
-				text-align: center;
-				display: inline-block;
-			}
+  	<h2>Generate SwiftSum</h2>
+  	<div>
+	  	<select name="songs" id="selectSongs" multiple>
+	  		<option value="3" selected>Some song</option>
+	  		<option value="3" selected>Some song</option>
+	  		<option value="3" selected>Some song</option>
+	  	</select>
 
-			.title {
-				font-size: 96px;
-				margin-bottom: 40px;
-			}
+	  	<br>
 
-			.quote {
-				font-size: 24px;
-			}
-		</style>
-	</head>
-	<body>
-		<div class="container">
-			<div class="content">
-				<div class="title">Laravel 5</div>
-				<div class="quote">{{ Inspiring::quote() }}</div>
-			</div>
-		</div>
-	</body>
+	  	<label>Paragraphs: <input type="text" name="paragraphs"></label>
+
+		<br>
+
+	  	<a href="#">Generate</a>
+  	</div>
+
+	<br><br>
+	<a href="#">Custom build</a>
+
+  </body>
 </html>
