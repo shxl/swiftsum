@@ -35,7 +35,7 @@
 		</section>
 		<footer>
 		<div class="main">
-			<p>built in the last 30 minutes by <a href="http://twitter.com/_shadj">@_shadj</a>,<a href="http://twitter.com/duffleman">@duffleman</a>, <a href="htpp://twitter.com/_emmacorlett">@_emmacorlett</a> and <a href="twitter.com/0xdeafcafe">@0xdeafcafe</a></p>
+			<p>built in the last 30 minutes by <a href="http://twitter.com/_shadj">@_shadj</a>,<a href="http://twitter.com/duffleman">@duffleman</a>, <a href="http://twitter.com/_emmacorlett">@_emmacorlett</a> and <a href="http://twitter.com/0xdeafcafe">@0xdeafcafe</a></p>
 		</div>
 			
 		</footer>
