@@ -1,6 +1,7 @@
 <?php namespace SwiftSum\Http\Controllers;
 
 use SwiftSum\Services\BaelorAPI;
+use SwiftSum\Services\AlbumService;
 
 class WelcomeController extends Controller {
 
@@ -23,6 +24,7 @@ class WelcomeController extends Controller {
 	 */
 	public function index()
 	{
-		return view('welcome');
+		$albums = (new AlbumService(new BaelorAPI()))->get();
+		return view('index', compact('albums'));
 	}
 }
