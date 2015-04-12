@@ -20,6 +20,7 @@ class LorumController extends Controller {
 	public function generate(Request $request)
     {
         $album = $request->album;
+        $pcount = $request->pcount;
         $linesLyrics = new Collection();
 
         $apirequest = $this->bae->prepareRequest('get', 'albums/' . $album);
@@ -45,7 +46,7 @@ class LorumController extends Controller {
             }
         }
 
-        $paragraphCount = 6;
+        $paragraphCount = $pcount;
         $paragraphs = new Collection();
         for($i = 0;$i < $paragraphCount;$i++) {
 

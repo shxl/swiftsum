@@ -14,10 +14,11 @@
 
 			@if(count($albums) >= 1)
 			<form action="/generate">
+				<input type="text" name="pcount" placeholder="number of paragraphs xox" max-length="2"><br><br>
 				@foreach($albums as $album)
 					<input type="radio" name="album" value="{{ $album->slug }}">{{ $album->name }}</input>
 				@endforeach
-				<input type="radio" name="album" value="random" selected>Random</input><br>
+				<br>
 				<button type="submit" class value="Shake it off!">Shake it off!</button>
 			@endif
 		</div>
