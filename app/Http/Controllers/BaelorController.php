@@ -15,9 +15,14 @@ class BaelorController extends Controller {
         $this->bae = $bae;
     }
 
-    public function test()
+    public function setupKey()
     {
         return $this->bae->setupKey();
+    }
+
+    public function create()
+    {
+        return $this->bae->createUser();
     }
 
 	public function handle($method)

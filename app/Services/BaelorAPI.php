@@ -1,13 +1,12 @@
 <?php namespace SwiftSum\Services;
 
+use GuzzleHttp\Client;
 use GuzzleHttp\Exception\ClientException;
 use GuzzleHttp\Stream\Stream;
 use SwiftSum\Exceptions\InvalidBae;
-use GuzzleHttp\Client;
 use SwiftSum\Setting;
 
-class BaelorAPI
-{
+class BaelorAPI {
 
     protected $base_url = 'http://baelor.io/api/v0/';
     protected $api_key;
@@ -16,6 +15,9 @@ class BaelorAPI
     private $api_password;
     protected $guzzle;
 
+    /**
+     *
+     */
     public function __construct()
     {
         $this->flash = app('flash');
@@ -27,9 +29,12 @@ class BaelorAPI
         $this->api_password = env('BAE_PASSWORD');
     }
 
+    /**
+     *
+     */
     public function setupKey()
     {
-        if (empty($this->api_key)) {
+        if (empty($this->api_key) OR is_null($this->api_key)) {
             $this->attemptLogin($this->api_username, $this->api_email);
         }
 
@@ -38,9 +43,20 @@ class BaelorAPI
 
     private function validateKey()
     {
-        $api = $this->api_key;
+        $request = $this->prepareRequest('get', 'users', [
+           'Authorization' => $this->api_key
+        ]);
+        
+        $body = $this->process($request);
+
+        dd($body);
     }
 
+    /**
+     * @param $identity
+     * @param $password
+     * @return bool
+     */
     private function attemptLogin($identity, $password)
     {
         $request = $this->prepareRequest('post', 'sessions', [
@@ -48,8 +64,32 @@ class BaelorAPI
             'password' => $password,
         ]);
         $body = $this->process($request);
+
+        if ($body->success === false) {
+            throw new InvalidBae('The user does not exist.');
+        }
+
+        return true;
     }
 
+    public function createUser()
+    {
+        $request = $this->prepareRequest('post', 'users', [
+            'username'         => $this->api_username,
+            'email_address'    => $this->api_email,
+            'password'         => $this->api_password,
+            'password_confirm' => $this->api_password
+        ]);
+        $body = $this->process($request);
+        // Come back to this, doesn't seem to play ball.
+    }
+
+    /**
+     * @param $request
+     * @param $endpoint
+     * @param $vars
+     * @return \GuzzleHttp\Message\Request|\GuzzleHttp\Message\RequestInterface
+     */
     private function prepareRequest($request, $endpoint, $vars)
     {
         $request = $this->guzzle->createRequest($request, $this->base_url . $endpoint);
@@ -57,27 +97,31 @@ class BaelorAPI
         $request->setBody($stream);
         $request->setHeader('Content-Type', 'application/json');
         $request->setHeader('Accept', 'application/json');
+
         return $request;
     }
 
+    /**
+     * @param $request
+     * @return string
+     */
     private function process($request)
     {
         try {
             $response = $this->guzzle->send($request);
 
-            $code = $response->getStatusCode();
-            $body = $response->getBody();
-            $returner = json_decode($body->getContents());
-            $returner['code'] = $code;
+            $body = $response->getBody()->getContents();
+            $returner = json_decode($body);
 
             return $returner;
-        } catch(ClientException $ex) {
+        } catch (ClientException $ex) {
             $body = $ex->getResponse()->getBody()->getContents();
             $code = $ex->getResponse()->getStatusCode();
             $body = json_decode($body);
             $body->code = $code;
+
             return $body;
-        } catch(\Exception $ex) {
+        } catch (\Exception $ex) {
             dd($ex);
         }
     }
