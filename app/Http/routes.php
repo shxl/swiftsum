@@ -14,3 +14,4 @@
 Route::get('/', 'WelcomeController@index');
 
 Route::get('baelor/{method}', 'BaelorController@handle');
+Route::get('generate', 'LorumController@generate');

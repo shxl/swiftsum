@@ -43,13 +43,12 @@ class BaelorAPI {
 
     private function validateKey()
     {
-        $request = $this->prepareRequest('get', 'users', [
-           'Authorization' => $this->api_key
-        ]);
-        
+        $request = $this->prepareRequest('get', 'users');
         $body = $this->process($request);
 
-        dd($body);
+        if($body->success !== true) {
+            throw new InvalidBae('API key failure.');
+        }
     }
 
     /**
@@ -90,11 +89,14 @@ class BaelorAPI {
      * @param $vars
      * @return \GuzzleHttp\Message\Request|\GuzzleHttp\Message\RequestInterface
      */
-    private function prepareRequest($request, $endpoint, $vars)
+    public function prepareRequest($request, $endpoint, $vars = [])
     {
         $request = $this->guzzle->createRequest($request, $this->base_url . $endpoint);
         $stream = Stream::factory(json_encode($vars));
         $request->setBody($stream);
+        if(!empty($this->api_key)) {
+            $request->setHeader('Authorization', $this->api_key);
+        }
         $request->setHeader('Content-Type', 'application/json');
         $request->setHeader('Accept', 'application/json');
 
@@ -105,7 +107,7 @@ class BaelorAPI {
      * @param $request
      * @return string
      */
-    private function process($request)
+    public function process($request)
     {
         try {
             $response = $this->guzzle->send($request);
@@ -116,9 +118,7 @@ class BaelorAPI {
             return $returner;
         } catch (ClientException $ex) {
             $body = $ex->getResponse()->getBody()->getContents();
-            $code = $ex->getResponse()->getStatusCode();
             $body = json_decode($body);
-            $body->code = $code;
 
             return $body;
         } catch (\Exception $ex) {
