@@ -24,7 +24,8 @@ class WelcomeController extends Controller {
 	 */
 	public function index()
 	{
+		$paragraphs = [];
 		$albums = (new AlbumService(new BaelorAPI()))->get();
-		return view('index', compact('albums'));
+		return view('index', compact('albums', 'paragraphs'));
 	}
 }
